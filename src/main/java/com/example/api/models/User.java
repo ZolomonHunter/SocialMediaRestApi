@@ -1,12 +1,10 @@
 package com.example.api.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CollectionId;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,10 +29,10 @@ public class User implements UserDetails {
     @Column(unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
-    private Role role;
-    @OneToMany(mappedBy = "from")
+    private UserRole role;
+    @OneToMany(mappedBy = "sender")
     private Set<FriendRequest> sentFriendRequests;
-    @OneToMany(mappedBy = "to")
+    @OneToMany(mappedBy = "receiver")
     private Set<FriendRequest> receivedFriendRequests;
 
     @Override

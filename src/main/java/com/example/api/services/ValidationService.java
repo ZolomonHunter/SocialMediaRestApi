@@ -8,9 +8,9 @@ import java.util.regex.Pattern;
 
 @Service
 public class ValidationService {
-    public class UsernameValidationException extends RuntimeException { }
-    public class EmailValidationException extends RuntimeException { }
-    public class PasswordValidationException extends RuntimeException { }
+    public static class UsernameValidationException extends RuntimeException { }
+    public static class EmailValidationException extends RuntimeException { }
+    public static class PasswordValidationException extends RuntimeException { }
 
     public void validateRegisterRequest(RegisterRequest request) {
         validateUsername(request.getUsername());

@@ -1,5 +1,5 @@
 package com.example.api.models;
 
-public enum Role {
+public enum UserRole {
     USER
 }
