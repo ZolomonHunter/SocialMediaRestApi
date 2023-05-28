@@ -1,6 +1,7 @@
 package com.example.api.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -28,8 +30,12 @@ public class User implements UserDetails {
     private String password;
     @Column(unique = true)
     private String email;
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "from")
+    private Set<FriendRequest> sentFriendRequests;
+    @OneToMany(mappedBy = "to")
+    private Set<FriendRequest> receivedFriendRequests;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
