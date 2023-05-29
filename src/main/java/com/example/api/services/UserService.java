@@ -13,19 +13,19 @@ public class UserService {
 
     static class UserNotFoundException extends RuntimeException { }
 
-    public User addUser(User user) {
+    public User add(User user) {
         return userRepository.save(user);
     }
 
     public User getCurrentUser() {
-        return getUser(jwtService.getCurrentUsername());
+        return get(jwtService.getCurrentUsername());
     }
 
-    public User getUser(int id) {
+    public User get(int id) {
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
 
-    public User getUser(String username) {
+    public User get(String username) {
         return userRepository.findByUsername(username).orElseThrow(UserNotFoundException::new);
     }
 

@@ -20,7 +20,7 @@ public class CommunicationService {
 
     public String declineFriendRequest(String senderUsername) {
         // get sender and receiver
-        User sender = userService.getUser(senderUsername);
+        User sender = userService.get(senderUsername);
         User receiver = userService.getCurrentUser();
 
         // get request
@@ -54,7 +54,7 @@ public class CommunicationService {
     public String sendFriendRequest(String receiverUsername) {
         // get sender and receiver
         User sender = userService.getCurrentUser();
-        User receiver = userService.getUser(receiverUsername);
+        User receiver = userService.get(receiverUsername);
 
         // check if user already sent request
         if (friendRequestService.isExist(sender, receiver))
@@ -69,7 +69,7 @@ public class CommunicationService {
 
     public String acceptFriendRequest(String senderUsername) {
         // get sender and receiver
-        User sender = userService.getUser(senderUsername);
+        User sender = userService.get(senderUsername);
         User receiver = userService.getCurrentUser();
 
         // get request
@@ -87,7 +87,7 @@ public class CommunicationService {
     public String cancelFriendRequest(String receiverUsername) {
         // get sender and receiver
         User sender = userService.getCurrentUser();
-        User receiver = userService.getUser(receiverUsername);
+        User receiver = userService.get(receiverUsername);
 
         // get request
         FriendRequest request = friendRequestService.get(sender, receiver);
@@ -102,7 +102,7 @@ public class CommunicationService {
 
     public String deleteFriendship(String username) {
         // get target and current users
-        User target = userService.getUser(username);
+        User target = userService.get(username);
         User current = userService.getCurrentUser();
 
         // users are not friends anymore

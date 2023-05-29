@@ -23,12 +23,12 @@ public class CommunicationController {
         return ResponseEntity.ok(communicationService.sendFriendRequest(receiverUsername));
     }
 
-    @PostMapping("getReceivedFriendRequests")
+    @GetMapping("getReceivedFriendRequests")
     public ResponseEntity<List<FriendRequestResponse>> getReceivedFriendRequests() {
         return ResponseEntity.ok(communicationService.getReceivedFriendRequests());
     }
 
-    @PostMapping("getSentFriendRequests")
+    @GetMapping("getSentFriendRequests")
     public ResponseEntity<List<FriendRequestResponse>> getSentFriendRequests() {
         return ResponseEntity.ok(communicationService.getSentFriendRequests());
     }

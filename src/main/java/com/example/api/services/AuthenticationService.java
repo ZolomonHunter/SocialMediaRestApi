@@ -33,7 +33,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .role(UserRole.USER)
                 .build();
-        userService.addUser(user);
+        userService.add(user);
 
         // generate token for created user
         var jwt = jwtService.generateToken(user);
@@ -54,7 +54,7 @@ public class AuthenticationService {
         );
 
         // generate token for authorized user
-        var jwt = jwtService.generateToken(userService.getUser(request.getUsername()));
+        var jwt = jwtService.generateToken(userService.get(request.getUsername()));
 
         return new AuthenticationResponse(jwt);
     }
