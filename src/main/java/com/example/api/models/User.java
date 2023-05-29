@@ -30,10 +30,11 @@ public class User implements UserDetails {
     private String email;
     @Enumerated(EnumType.STRING)
     private UserRole role;
-    @OneToMany(mappedBy = "sender")
-    private Set<FriendRequest> sentFriendRequests;
-    @OneToMany(mappedBy = "receiver")
-    private Set<FriendRequest> receivedFriendRequests;
+
+    @OneToMany(mappedBy = "sender", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FriendRequest> sentFriendRequests;
+    @OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<FriendRequest> receivedFriendRequests;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

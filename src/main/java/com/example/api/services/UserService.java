@@ -2,22 +2,23 @@ package com.example.api.services;
 
 import com.example.api.models.User;
 import com.example.api.repositories.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final JwtService jwtService;
 
     static class UserNotFoundException extends RuntimeException { }
 
     public User addUser(User user) {
         return userRepository.save(user);
+    }
+
+    public User getCurrentUser() {
+        return getUser(jwtService.getCurrentUsername());
     }
 
     public User getUser(int id) {

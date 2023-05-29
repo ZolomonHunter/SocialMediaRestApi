@@ -5,14 +5,10 @@ import com.example.api.models.LoginRequest;
 import com.example.api.models.RegisterRequest;
 import com.example.api.services.AuthenticationService;
 import com.example.api.services.ValidationService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.WebRequest;
 
 import java.util.Set;
 

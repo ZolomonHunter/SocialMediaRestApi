@@ -16,7 +16,7 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final ValidationService validationService;
 
-    public static class AccountAlreadyExistsException extends RuntimeException {} ;
+    public static class AccountAlreadyExistsException extends RuntimeException {}
     public AuthenticationResponse register(RegisterRequest request) {
         // validate request
         validationService.validateRegisterRequest(request);
