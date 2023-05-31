@@ -53,12 +53,17 @@ public class CommunicationController {
         return ResponseEntity.ok(communicationService.deleteFriendship(targetUsername));
     }
 
-    @ExceptionHandler(CommunicationService.FriendRequestAlreadyDeclined.class)
+    @PostMapping("startChat")
+    public ResponseEntity<String> startChat(String username) {
+        return ResponseEntity.ok(communicationService.startChat(username));
+    }
+
+    @ExceptionHandler(CommunicationService.FriendRequestAlreadyDeclinedException.class)
     public ResponseEntity<?> friendRequestAlreadyDeclined() {
         return new ResponseEntity<>("You already declined friend request from that user", HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(CommunicationService.FriendRequestAlreadySent.class)
+    @ExceptionHandler(CommunicationService.FriendRequestAlreadySentException.class)
     public ResponseEntity<?> friendRequestAlreadySent() {
         return new ResponseEntity<>("You already have friend request with that user", HttpStatus.CONFLICT);
     }
@@ -66,6 +71,11 @@ public class CommunicationController {
     @ExceptionHandler(FriendRequestService.FriendRequestNotFound.class)
     public ResponseEntity<?> userNotFound() {
         return new ResponseEntity<>("You didn't received friend request from that user", HttpStatus.NO_CONTENT);
+    }
+
+    @ExceptionHandler(CommunicationService.NotFriendException.class)
+    public ResponseEntity<?> notFriend() {
+        return new ResponseEntity<>("This user is not your friend", HttpStatus.NO_CONTENT);
     }
 
 }

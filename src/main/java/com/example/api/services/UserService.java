@@ -11,7 +11,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
 
-    static class UserNotFoundException extends RuntimeException { }
+    public static class UserNotFoundException extends RuntimeException { }
 
     public User add(User user) {
         return userRepository.save(user);

@@ -6,6 +6,7 @@ import com.example.api.models.RegisterRequest;
 import com.example.api.services.AuthenticationService;
 import com.example.api.services.ValidationService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,18 +16,18 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authService;
-    @PostMapping("/register")
+    @PostMapping("register")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
+            String login, String password, String email
     ) {
-        return ResponseEntity.ok(authService.register(request));
+        return ResponseEntity.ok(authService.register(new RegisterRequest(login, password, email)));
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> login (
-            @RequestBody LoginRequest request
+            String login, String password
     ) {
-        return ResponseEntity.ok(authService.authenticate(request));
+        return ResponseEntity.ok(authService.authenticate(new LoginRequest(login, password)));
     }
 
     @ExceptionHandler(AuthenticationService.AccountAlreadyExistsException.class)

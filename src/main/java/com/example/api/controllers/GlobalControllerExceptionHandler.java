@@ -2,6 +2,7 @@ package com.example.api.controllers;
 
 import com.example.api.services.AuthenticationService;
 import com.example.api.services.CommunicationService;
+import com.example.api.services.UserService;
 import com.example.api.services.ValidationService;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpHeaders;
@@ -18,7 +19,7 @@ import java.sql.SQLException;
 @ControllerAdvice
 public class GlobalControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UsernameNotFoundException.class)
+    @ExceptionHandler(UserService.UserNotFoundException.class)
     public ResponseEntity<?> userNotFound(RuntimeException ex, WebRequest request) {
         String bodyOfResponse = "No users with such username";
         return handleExceptionInternal(ex, bodyOfResponse,

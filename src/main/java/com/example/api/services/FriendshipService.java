@@ -29,4 +29,13 @@ public class FriendshipService {
             id = new FriendshipId(second, first);
         friendshipRepository.deleteById(id);
     }
+
+    public boolean isExist(User first, User second) {
+        FriendshipId id;
+        if (first.getId().compareTo(second.getId()) < 0)
+            id = new FriendshipId(first, second);
+        else
+            id = new FriendshipId(second, first);
+        return friendshipRepository.existsById(id);
+    }
 }

@@ -14,9 +14,9 @@ public class CommunicationService {
     private final FriendshipService friendshipService;
     private final SubscriptionService subscriptionService;
 
-    public static class FriendRequestAlreadySent extends RuntimeException { }
-    public static class FriendRequestAlreadyDeclined extends RuntimeException { }
-
+    public static class FriendRequestAlreadySentException extends RuntimeException { }
+    public static class FriendRequestAlreadyDeclinedException extends RuntimeException { }
+    public static class NotFriendException extends RuntimeException { }
 
     public String declineFriendRequest(String senderUsername) {
         // get sender and receiver
@@ -28,7 +28,7 @@ public class CommunicationService {
 
         // set request status to declined
         if (request.getStatus() == FriendRequestStatus.DECLINED)
-            throw new FriendRequestAlreadyDeclined();
+            throw new FriendRequestAlreadyDeclinedException();
         request.setStatus(FriendRequestStatus.DECLINED);
         friendRequestService.update(request);
         return "You declined friend request";
@@ -58,7 +58,7 @@ public class CommunicationService {
 
         // check if user already sent request
         if (friendRequestService.isExist(sender, receiver))
-            throw new FriendRequestAlreadySent();
+            throw new FriendRequestAlreadySentException();
 
         // add new friend request
         friendRequestService.add(sender, receiver);
@@ -113,5 +113,17 @@ public class CommunicationService {
         // unsubscribe current user from target
         subscriptionService.delete(current, target);
         return "You are no longer friends";
+    }
+
+    public String startChat(String username) {
+        // get target and current users
+        User target = userService.get(username);
+        User current = userService.getCurrentUser();
+
+        // check if users are not friends
+        if (!friendshipService.isExist(target, current))
+            throw new NotFriendException();
+
+        return "Link to chat: <link example>";
     }
 }
