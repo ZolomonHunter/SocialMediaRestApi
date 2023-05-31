@@ -7,6 +7,8 @@ import com.example.api.repositories.SubscriptionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class SubscriptionService {
@@ -18,5 +20,12 @@ public class SubscriptionService {
 
     public void delete(User subscriber, User publisher) {
         subscriptionRepository.deleteById(new SubscriptionId(subscriber, publisher));
+    }
+
+    public List<User> getSubscribedTo(User user) {
+        return subscriptionRepository.findAll().stream()
+                .filter(subscription -> subscription.getSubscriber() == user)
+                .map(Subscription::getPublisher)
+                .toList();
     }
 }

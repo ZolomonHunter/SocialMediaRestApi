@@ -56,6 +56,10 @@ public class CommunicationService {
         User sender = userService.getCurrentUser();
         User receiver = userService.get(receiverUsername);
 
+        // check if user sending request himself
+        if (sender == receiver)
+            throw new UserService.UserNotFoundException();
+
         // check if user already sent request
         if (friendRequestService.isExist(sender, receiver))
             throw new FriendRequestAlreadySentException();

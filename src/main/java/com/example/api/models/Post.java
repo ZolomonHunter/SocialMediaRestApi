@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.SourceType;
+
+import java.time.Instant;
 
 @Data
 @Builder
@@ -22,4 +26,6 @@ public class Post {
     @ManyToOne
     private User owner;
     private String imageUrl;
+    @CreationTimestamp(source = SourceType.DB)
+    private Instant createdOn;
 }

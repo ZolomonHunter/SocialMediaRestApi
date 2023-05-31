@@ -15,7 +15,7 @@ public class FriendRequestService {
     private final FriendRequestRepository friendRequestRepository;
     private final UserService userService;
 
-    public static class FriendRequestNotFound extends RuntimeException { }
+    public static class FriendRequestNotFoundException extends RuntimeException { }
 
     public FriendRequest update(FriendRequest request) {
         return friendRequestRepository.save(request);
@@ -27,7 +27,7 @@ public class FriendRequestService {
 
     public FriendRequest get(User sender, User receiver) {
         return friendRequestRepository.findById(new FriendRequestId(sender, receiver))
-                .orElseThrow(FriendRequestNotFound::new);
+                .orElseThrow(FriendRequestNotFoundException::new);
     }
 
     public FriendRequest add(User sender, User receiver) {

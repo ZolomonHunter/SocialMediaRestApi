@@ -68,7 +68,7 @@ public class PostManagementController {
 
     @ExceptionHandler(PostService.PostNotFoundException.class)
     public ResponseEntity<?> postNotFound() {
-        return new ResponseEntity<>("No posts with such id", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("No posts with such id", HttpStatus.NOT_FOUND);
     }
 
 

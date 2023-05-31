@@ -68,14 +68,14 @@ public class CommunicationController {
         return new ResponseEntity<>("You already have friend request with that user", HttpStatus.CONFLICT);
     }
 
-    @ExceptionHandler(FriendRequestService.FriendRequestNotFound.class)
-    public ResponseEntity<?> userNotFound() {
-        return new ResponseEntity<>("You didn't received friend request from that user", HttpStatus.NO_CONTENT);
+    @ExceptionHandler(FriendRequestService.FriendRequestNotFoundException.class)
+    public ResponseEntity<?> friendRequestNotFound() {
+        return new ResponseEntity<>("You didn't received friend request from that user", HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(CommunicationService.NotFriendException.class)
     public ResponseEntity<?> notFriend() {
-        return new ResponseEntity<>("This user is not your friend", HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("This user is not your friend", HttpStatus.CONFLICT);
     }
 
 }

@@ -46,7 +46,7 @@ public class PostManagementService {
                         .imageUrl(imagePath)
                         .owner(user)
                 .build());
-        return postToPostResponse(post);
+        return postService.postToPostResponse(post);
     }
 
     public PostResponse updatePost(int id, Optional<String> header, Optional<String> description, Optional<MultipartFile> file) {
@@ -65,7 +65,7 @@ public class PostManagementService {
             post.setImageUrl(replaceImage(file, post));
 
         postService.update(post);
-        return postToPostResponse(post);
+        return postService.postToPostResponse(post);
     }
 
     private String deletePost(int id) {
@@ -136,17 +136,14 @@ public class PostManagementService {
         // get user
         User user = userService.getCurrentUser();
 
-        return user.getPosts().stream().map(this::postToPostResponse).toList();
+        return user.getPosts().stream().map(postService::postToPostResponse).toList();
     }
 
     public List<PostResponse> getPosts(String username) {
         // get user
         User user = userService.get(username);
 
-        return user.getPosts().stream().map(this::postToPostResponse).toList();
+        return user.getPosts().stream().map(postService::postToPostResponse).toList();
     }
 
-    private PostResponse postToPostResponse(Post post) {
-        return new PostResponse(post.getId(), post.getHeader(), post.getDescription(), post.getImageUrl());
-    }
 }

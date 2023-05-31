@@ -1,5 +1,6 @@
 package com.example.api.security;
 
+import com.example.api.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,7 +22,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("text/plain");
         String message;
         Throwable cause = authException.getCause();
-        if (cause instanceof EntityNotFoundException)
+        if (cause instanceof EntityNotFoundException || cause instanceof UserService.UserNotFoundException)
             message = "Wrong login or password";
         else if (cause instanceof AccessDeniedException || authException instanceof InsufficientAuthenticationException)
             message = "Please provide valid Jwt token";
