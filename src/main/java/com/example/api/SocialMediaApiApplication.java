@@ -10,7 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @OpenAPIDefinition(info = @Info(title = "Social Media API", version = "1.0"))
-@SecurityScheme(name = "JwtAuth", scheme = "bearer", bearerFormat = "jwt", type = SecuritySchemeType.HTTP, in = SecuritySchemeIn.HEADER)
+@SecurityScheme(name = "JwtAuth", scheme = "bearer", bearerFormat = "jwt", type = SecuritySchemeType.HTTP,
+		in = SecuritySchemeIn.HEADER, description = "First you need to register/auth to get jwt token, " +
+													"then insert it here")
 public class SocialMediaApiApplication {
 
 	public static void main(String[] args) {

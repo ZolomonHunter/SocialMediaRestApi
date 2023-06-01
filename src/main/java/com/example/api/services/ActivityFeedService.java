@@ -17,6 +17,8 @@ public class ActivityFeedService {
     private final UserService userService;
     private final SubscriptionService subscriptionService;
 
+    public static class WrongPageNumberException extends RuntimeException { }
+
     private static final int PAGE_SIZE = 25;
 
     public List<PostResponse> getActivityFeed() {
@@ -26,6 +28,8 @@ public class ActivityFeedService {
     }
 
     public List<PostResponse> getActivityFeedAtPage(int page) {
+        if (page < 1)
+            throw new WrongPageNumberException();
         return getAllPosts().stream()
                 .skip((long) (page - 1) * PAGE_SIZE)
                 .limit(PAGE_SIZE)
@@ -50,6 +54,8 @@ public class ActivityFeedService {
     }
 
     public List<PostResponse> getActivityFeedSortedByTimeAtPage(int page) {
+        if (page < 1)
+            throw new WrongPageNumberException();
         return getAllPosts().stream()
                 .sorted(Comparator.comparing(Post::getCreatedOn))
                 .skip((long) (page - 1) * PAGE_SIZE)

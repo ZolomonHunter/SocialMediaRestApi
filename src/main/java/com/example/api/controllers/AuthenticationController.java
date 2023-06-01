@@ -2,9 +2,15 @@ package com.example.api.controllers;
 
 import com.example.api.models.AuthenticationResponse;
 import com.example.api.models.LoginRequest;
+import com.example.api.models.PostResponse;
 import com.example.api.models.RegisterRequest;
 import com.example.api.services.AuthenticationService;
 import com.example.api.services.ValidationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
@@ -16,14 +22,31 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class AuthenticationController {
     private final AuthenticationService authService;
+
     @PostMapping("register")
+    @Operation(summary = "User registration")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Returns jwt token for registered user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Login/password/email validation error"),
+            @ApiResponse(responseCode = "409", description = "Account with the same login/email already exists")
+    })
     public ResponseEntity<AuthenticationResponse> register(
             String login, String password, String email
     ) {
         return ResponseEntity.ok(authService.register(new RegisterRequest(login, password, email)));
     }
 
+
     @PostMapping("login")
+    @Operation(summary = "User authentication")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Returns jwt token for authenticated user",
+                    content = { @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = AuthenticationResponse.class)) }),
+            @ApiResponse(responseCode = "400", description = "Login/password validation error or wrong login/password")
+    })
     public ResponseEntity<AuthenticationResponse> login (
             String login, String password
     ) {
